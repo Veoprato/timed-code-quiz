@@ -1,8 +1,8 @@
 // Variables 
 const startButton = document.getElementById('startbutton');
-const startContainer = document.getElementById('mainpage')
+const startContainer = document.getElementById('mainpage');
 const quizContainer = document.getElementById('quiz-container');
-const endContainer = document.getElementById('endgame')
+const endContainer = document.getElementById('endgame');
 const resultsContainer = document.getElementById('highscores');
 
 
@@ -29,3 +29,14 @@ const quizQuestions = [
         a: "4. console.log"
     }
 ];
+
+// Event Listeners
+startButton.addEventListener("click", startGame);
+
+// Functions
+function startGame() {
+    console.log("Game Start");
+    startContainer.classList.add("hide");
+    quizContainer.classList.remove("hide");
+}
+
