@@ -4,7 +4,9 @@ const startContainer = document.getElementById('mainpage');
 const quizContainer = document.getElementById('quiz-container');
 const endContainer = document.getElementById('endgame');
 const resultsContainer = document.getElementById('highscores');
+var timerEl = document.getElementById('timer');
 
+var timeLeft = 74;
 
 // Quiz Questions Array 
 const quizQuestions = [
@@ -31,12 +33,25 @@ const quizQuestions = [
 ];
 
 // Event Listeners
+startButton.addEventListener("click", countdown);
 startButton.addEventListener("click", startGame);
+
 
 // Functions
 function startGame() {
     console.log("Game Start");
     startContainer.classList.add("hide");
     quizContainer.classList.remove("hide");
+    timerEl.classList.remove("hide");
 }
 
+function countdown() {
+    var timeInterval = setInterval(function() {
+        if (timeLeft > 0) {
+            timerEl.textContent = "Time: " + timeLeft;
+            timeLeft--;
+        } else {
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+ }
