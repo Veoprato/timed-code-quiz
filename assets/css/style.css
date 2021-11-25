@@ -3,6 +3,61 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+/* Header Style  */
+header h1 {
+    float: right;
+    padding-right: 20px;
+    font-size: 25px;
+}
+
+header {
+    display: block;
+    margin: 20px 10px;
+    justify-content: space-evenly;
+}
+
+/* Page Style  */
+
+#mainpage {
+    text-align: center;
+}
+
+#quiz-container {
+    display: grid;
+    padding: 50px;
+    grid-template-columns: .5fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-grid {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0;
+    max-width: 150px;
+    width: 75%;
+}
+
+.btn {
+    background-color: rgb(218, 137, 255);
+    color: white;
+    font-size: 15px;
+    border-radius: 8px;
+    padding: 5px 10px;
+    text-align: start;
+}
+
+.btn:hover {
+    background-color: rgb(200, 81, 255);;
+    border-color: black;
+}
+
+#endgame {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
 .hide {
     display: none;
 }
