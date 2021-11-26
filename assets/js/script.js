@@ -1,15 +1,98 @@
 // Variables 
 const startButton = document.getElementById('startbutton');
 const startContainer = document.getElementById('mainpage');
+
 const quizContainer = document.getElementById('quiz-container');
-const questionContainer = document.getElementById('question-container')
+const questionContainer = document.getElementById('question-container');
+const questionElement = document.getElementById('question');
+const answerBtnElement = document.getElementById('answer-buttons');
+let quiz = [];
+let currentQuestionIndex = 0;
+
 const endContainer = document.getElementById('endgame');
 const resultsContainer = document.getElementById('highscores');
+
 var timerEl = document.getElementById('timer');
+var timeLeft = 74;
 
-var timeLeft = 10;
+// Event Listeners
+startButton.addEventListener("click", countdown);
+startButton.addEventListener("click", startGame);
 
-// Quiz Questions Array 
+
+// Functions
+function startGame() {
+    console.log("Game Start");
+    startContainer.classList.add("hide");
+    questionContainer.classList.remove("hide");
+    timerEl.classList.remove("hide");
+    currentQuestionIndex = 0;
+    quiz = quizQuestions;
+    setNextQuestion();
+}
+
+function setNextQuestion() {
+    resetState();
+    showQuestion(quiz[currentQuestionIndex]);
+}
+
+function showQuestion(q) {
+    questionElement.innerText = q.q;
+
+    for  (i=0; i<q.choices.length; i++) {
+        const button = document.createElement('button');
+        button.classList.add('btn')
+        button.innerText = q.choices[i];
+
+        answerBtnElement.appendChild(button);
+    }
+}
+
+function resetState() {
+    while (answerBtnElement.firstChild) {
+        answerBtnElement.removeChild(answerBtnElement.firstChild)
+    }
+}
+
+function checkAnswer(e) {
+    
+    var selectedEl = e.target;
+    var selected = selectedEl.innerText;
+
+    
+    if (resultEl.firstChild !== null) {
+        resultEl.removeChild(resultEl.firstChild);
+    }
+
+    if (selected === q.a) {
+        const msgEl = document.createElement('h4');
+        msgEl.innerText = "Correct!";
+        resultEl.appendChild(msgEl);
+    }
+    else {
+        const msgEl = document.createElement('h4');
+        msgEl.innerText = "Wrong!";
+        resultEl.appendChild(msgEl);
+        timeLeft -= 15;
+    }
+
+}
+
+function countdown() {
+    var timeInterval = setInterval(function() {
+        if (timeLeft > 0) {
+            timerEl.textContent = "Time: " + timeLeft;
+            timeLeft--;
+        } else {
+            questionContainer.classList.add("hide");
+            endContainer.classList.remove("hide");
+            timerEl.classList.add("hide");
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+ }
+
+ // Quiz Questions Array 
 const quizQuestions = [
     {
         q: "Commonly used datatypes DO NOT include:",
@@ -32,32 +115,3 @@ const quizQuestions = [
         a: "4. console.log"
     }
 ];
-
-// Event Listeners
-startButton.addEventListener("click", countdown);
-startButton.addEventListener("click", startGame);
-
-
-// Functions
-function startGame() {
-    console.log("Game Start");
-    startContainer.classList.add("hide");
-    questionContainer.classList.remove("hide");
-    timerEl.classList.remove("hide");
-}
-
-function setNextQuestion() {}
-
-function countdown() {
-    var timeInterval = setInterval(function() {
-        if (timeLeft > 0) {
-            timerEl.textContent = "Time: " + timeLeft;
-            timeLeft--;
-        } else {
-            questionContainer.classList.add("hide");
-            endContainer.classList.remove("hide");
-            timerEl.classList.add("hide");
-            clearInterval(timeInterval);
-        }
-    }, 1000);
- }
