@@ -5,9 +5,10 @@
 
 /* Header Style  */
 header h1 {
-    float: right;
     padding-right: 20px;
     font-size: 25px;
+    position: fixed;
+    right: 0;
 }
 
 header {
@@ -20,6 +21,11 @@ header {
 
 #mainpage {
     text-align: center;
+}
+
+#mainpage h2 {
+    font-weight: bold;
+    font-size: 30px;
 }
 
 #quiz-container {
