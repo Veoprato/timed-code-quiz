@@ -21,6 +21,8 @@ startButton.addEventListener("click", startGame);
 
 
 // Functions
+
+// starts the quiz and hides main start page
 function startGame() {
     console.log("Game Start");
     startContainer.classList.add("hide");
@@ -28,58 +30,43 @@ function startGame() {
     timerEl.classList.remove("hide");
     currentQuestionIndex = 0;
     quiz = quizQuestions;
-    setNextQuestion();
+    showQuestion();
 }
 
-function setNextQuestion() {
-    resetState();
-    showQuestion(quiz[currentQuestionIndex]);
-}
-
-function showQuestion(q) {
+function showQuestion() {
+    // Sets text for current question
+    let q = (quiz[currentQuestionIndex]); 
     questionElement.innerText = q.q;
 
-    for  (i=0; i<q.choices.length; i++) {
+    // creates buttons for choices 
+    for (i=0; i<q.choices.length; i++) {
         const button = document.createElement('button');
         button.classList.add('btn')
         button.innerText = q.choices[i];
-
+        button.addEventListener('click', function() {
+            resetState();
+        });
         answerBtnElement.appendChild(button);
     }
 }
 
+// resets buttons for next question 
 function resetState() {
-    while (answerBtnElement.firstChild) {
-        answerBtnElement.removeChild(answerBtnElement.firstChild)
+    currentQuestionIndex++;
+    if (currentQuestionIndex < quiz.length) {
+        while (answerBtnElement.firstChild) {
+            answerBtnElement.removeChild(answerBtnElement.firstChild)
+        }
+        showQuestion();
+    } else {
+        clearInterval(timeInterval);
+        console.log("Finish");
     }
 }
 
-function checkAnswer(e) {
-    
-    var selectedEl = e.target;
-    var selected = selectedEl.innerText;
-
-    
-    if (resultEl.firstChild !== null) {
-        resultEl.removeChild(resultEl.firstChild);
-    }
-
-    if (selected === q.a) {
-        const msgEl = document.createElement('h4');
-        msgEl.innerText = "Correct!";
-        resultEl.appendChild(msgEl);
-    }
-    else {
-        const msgEl = document.createElement('h4');
-        msgEl.innerText = "Wrong!";
-        resultEl.appendChild(msgEl);
-        timeLeft -= 15;
-    }
-
-}
 
 function countdown() {
-    var timeInterval = setInterval(function() {
+    timeInterval = setInterval(function() {
         if (timeLeft > 0) {
             timerEl.textContent = "Time: " + timeLeft;
             timeLeft--;
