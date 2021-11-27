@@ -23,7 +23,7 @@ header {
     text-align: center;
 }
 
-#mainpage h2 {
+#mainpage h2, #question {
     font-weight: bold;
     font-size: 30px;
 }
@@ -38,6 +38,19 @@ header {
 
 #question {
     font-size: 30px;
+}
+
+#highscores {
+
+    justify-content: center;
+    align-items: center;
+}
+
+#score-list {
+    display: grid;
+    background-color: lightpink;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-grid {

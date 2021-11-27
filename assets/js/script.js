@@ -7,20 +7,31 @@ const quizContainer = document.getElementById('quiz-container');
 const questionContainer = document.getElementById('question-container');
 const questionElement = document.getElementById('question');
 const answerBtnElement = document.getElementById('answer-buttons');
-let quiz = [];
-let currentQuestionIndex = 0;
-var currentQuestion = {};
 // end of game
 const endContainer = document.getElementById('endgame');
 const scoreElement = document.getElementById('score');
-const resultsContainer = document.getElementById('highscores');
-
+const initialsInput = document.getElementById('initials');
+const submitButton = document.getElementById('submit');
+//Highscore Board
+const noScoresElement = document.getElementById('no-score');
+const hiScoreContainer = document.getElementById('highscores');
+const hiScoreList = document.getElementById('score-list');
+const clearHiScoreButton = document.getElementById('clear-button');
+// Game Variables
+let quiz = [];
+let currentQuestionIndex = 0;
+var currentQuestion = {};
+let score = 0;
 var timerEl = document.getElementById('timer');
-var timeLeft = 75;
+let timeLeft = 75;
 
 // Event Listeners
 startButton.addEventListener("click", countdown);
 startButton.addEventListener("click", startGame);
+submitButton.addEventListener('click', function(){
+    saveScore(score)
+});
+clearHiScoreButton.addEventListener('click', clearScore);
 
 
 // Functions
@@ -54,11 +65,11 @@ function showQuestion() {
     }
 }
 
+//is the selected choice right or wrong
 function checkAnswer(event) {
-    
     var selectedElement = event.target;
     var selected = selectedElement.innerText;
-    console.log(selected)
+
 
     if (selected === currentQuestion.a) {
         console.log("Correct")
@@ -82,21 +93,40 @@ function resetState() {
         questionContainer.classList.add("hide");
         endContainer.classList.remove("hide");
         timerEl.classList.add("hide");
-        score();
+        endScore();
         clearInterval(timeInterval);
-        console.log("Finish");
-        console.log(score);
-        scoreElement.textContent = score
+        scoreElement.textContent = score;
     }
 }
 
-function score() {
+// Score = Time Remaining
+function endScore() {
     if (timeLeft < 0) {
         timeLeft = 0;
     }
+    console.log(timeLeft);
     return score = timeLeft;
 }
 
+//Score Submit to Highscores
+function saveScore() {
+    endContainer.classList.add("hide");
+    hiScoreContainer.classList.remove("hide");
+
+    var scoreLineElement = document.createElement('li');
+    scoreLineElement.innerText = initialsInput.value + " - " + score;
+    hiScoreList.appendChild(scoreLineElement);
+    initialsInput.value = "";
+}
+
+// clears score list
+function clearScore() {
+    while (hiScoreList.firstChild){
+        hiScoreList.removeChild(hiScoreList.firstChild);
+    }
+    console.log(hiScoreList.firstChild);
+    noScoresElement.classList.remove("hide");
+}
 
 function countdown() {
     timeInterval = setInterval(function() {
