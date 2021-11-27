@@ -1,7 +1,8 @@
 // Variables 
+// start page
 const startButton = document.getElementById('startbutton');
 const startContainer = document.getElementById('mainpage');
-
+// main game
 const quizContainer = document.getElementById('quiz-container');
 const questionContainer = document.getElementById('question-container');
 const questionElement = document.getElementById('question');
@@ -9,12 +10,13 @@ const answerBtnElement = document.getElementById('answer-buttons');
 let quiz = [];
 let currentQuestionIndex = 0;
 var currentQuestion = {};
-
+// end of game
 const endContainer = document.getElementById('endgame');
+const scoreElement = document.getElementById('score');
 const resultsContainer = document.getElementById('highscores');
 
 var timerEl = document.getElementById('timer');
-var timeLeft = 74;
+var timeLeft = 75;
 
 // Event Listeners
 startButton.addEventListener("click", countdown);
@@ -77,9 +79,22 @@ function resetState() {
         }
         showQuestion();
     } else {
+        questionContainer.classList.add("hide");
+        endContainer.classList.remove("hide");
+        timerEl.classList.add("hide");
+        score();
         clearInterval(timeInterval);
         console.log("Finish");
+        console.log(score);
+        scoreElement.textContent = score
     }
+}
+
+function score() {
+    if (timeLeft < 0) {
+        timeLeft = 0;
+    }
+    return score = timeLeft;
 }
 
 
