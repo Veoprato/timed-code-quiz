@@ -36,6 +36,10 @@ header {
     align-items: center;
 }
 
+#question {
+    font-size: 30px;
+}
+
 .btn-grid {
     display: grid;
     gap: 10px;

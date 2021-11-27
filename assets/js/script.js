@@ -8,6 +8,7 @@ const questionElement = document.getElementById('question');
 const answerBtnElement = document.getElementById('answer-buttons');
 let quiz = [];
 let currentQuestionIndex = 0;
+var currentQuestion = {};
 
 const endContainer = document.getElementById('endgame');
 const resultsContainer = document.getElementById('highscores');
@@ -35,19 +36,36 @@ function startGame() {
 
 function showQuestion() {
     // Sets text for current question
-    let q = (quiz[currentQuestionIndex]); 
-    questionElement.innerText = q.q;
+    currentQuestion = (quiz[currentQuestionIndex]); 
+    questionElement.innerText = currentQuestion.q;
 
     // creates buttons for choices 
-    for (i=0; i<q.choices.length; i++) {
+    for (i=0; i<currentQuestion.choices.length; i++) {
         const button = document.createElement('button');
         button.classList.add('btn')
-        button.innerText = q.choices[i];
+        button.innerText = currentQuestion.choices[i];
         button.addEventListener('click', function() {
+            checkAnswer(event);
             resetState();
         });
         answerBtnElement.appendChild(button);
     }
+}
+
+function checkAnswer(event) {
+    
+    var selectedElement = event.target;
+    var selected = selectedElement.innerText;
+    console.log(selected)
+
+    if (selected === currentQuestion.a) {
+        console.log("Correct")
+    }
+    else {
+        console.log("Wrong")
+        timeLeft -= 15;
+    }
+
 }
 
 // resets buttons for next question 
