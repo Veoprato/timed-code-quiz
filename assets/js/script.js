@@ -17,6 +17,7 @@ const noScoresElement = document.getElementById('no-score');
 const hiScoreContainer = document.getElementById('highscores');
 const hiScoreList = document.getElementById('score-list');
 const clearHiScoreButton = document.getElementById('clear-button');
+const backButton = document.getElementById('back-button');
 // Game Variables
 let quiz = [];
 let currentQuestionIndex = 0;
@@ -29,9 +30,15 @@ let timeLeft = 75;
 startButton.addEventListener("click", countdown);
 startButton.addEventListener("click", startGame);
 submitButton.addEventListener('click', function(){
-    saveScore(score)
+    saveScore(score);
+    var userScore = {
+        userInitials: initialsInput.value,
+        userScore: score,
+    };
+    localStorage.setItem("userScore", JSON.stringify(userScore));
 });
 clearHiScoreButton.addEventListener('click', clearScore);
+backButton.addEventListener('click', resetGame);
 
 
 // Functions
@@ -126,6 +133,17 @@ function clearScore() {
     }
     console.log(hiScoreList.firstChild);
     noScoresElement.classList.remove("hide");
+}
+
+function resetGame() {
+    timeLeft = 75;
+    currentQuestionIndex = 0;
+    timerEl.textContent = "Time: " + timeLeft;
+    hiScoreContainer.classList.add("hide");
+    startContainer.classList.remove("hide");
+    while (answerBtnElement.firstChild){
+        answerBtnElement.removeChild(answerBtnElement.firstChild);
+    }
 }
 
 function countdown() {
